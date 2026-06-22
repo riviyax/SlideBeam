@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SlideBeam — Control Your Slides With Any IR Remote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-logo">
+        <span class="logo-dot"></span>
+        SlideBeam
+      </div>
+      <div class="nav-links">
+        <a href="#how-it-works">Setup</a>
+        <a href="#video">Video</a>
+        <a href="#commands">Commands</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#open-source">Open Source</a>
+      </div>
+      <a href="https://github.com/riviyax/Presentor-Remote" class="nav-cta"
+        >GitHub</a
+      >
+    </nav>
+
+    <section class="hero">
+      <div class="hero-grid-bg"></div>
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        Open Source · Arduino + Python
+        <span class="eyebrow-line"></span>
+      </div>
+      <h1>Move your slides<br />with <em>any remote</em></h1>
+      <p class="hero-sub">
+        Turn any household IR remote into a wireless presentation clicker. No
+        Bluetooth, no dongles — just an Arduino, an IR sensor, and a $2 remote.
+      </p>
+      <div class="hero-actions">
+        <a
+          href="https://github.com/riviyax/Presentor-Remote"
+          class="btn-primary"
+        >
+          ★ Star on GitHub
+        </a>
+        <a href="#how-it-works" class="btn-secondary"> See how it works </a>
+      </div>
+    </section>
+
+    <div style="max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 0">
+      <div class="section-label" style="text-align: center">
+        Try it — click any button below
+      </div>
+    </div>
+    <div class="demo-section" id="demo">
+      <div class="demo-remote">
+        <div class="remote-body" id="remote-body">
+          <div class="remote-top-bar"></div>
+          <div class="remote-ir-eye" id="ir-eye"></div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn"
+              data-cmd="NEXT"
+              data-title="Next Slide"
+              data-desc="Advance to the next slide"
+              data-key="→ Right Arrow"
+              data-color="blue"
+            >
+              NEXT ▶
+            </button>
+            <button
+              class="r-btn"
+              data-cmd="PREVIOUS"
+              data-title="Previous Slide"
+              data-desc="Go back to the previous slide"
+              data-key="← Left Arrow"
+              data-color="blue"
+            >
+              ◀ PREV
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn wide"
+              data-cmd="START"
+              data-title="Open PowerPoint"
+              data-desc="Launches Microsoft PowerPoint"
+              data-key="powerpnt.exe"
+              data-color="blue"
+            >
+              START PPTX
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn"
+              data-cmd="APP"
+              data-title="Start Slideshow"
+              data-desc="Begins the presentation from slide one"
+              data-key="F5"
+              data-color="blue"
+            >
+              SHOW
+            </button>
+            <button
+              class="r-btn"
+              data-cmd="END"
+              data-title="End Slideshow"
+              data-desc="Exits the current presentation"
+              data-key="Esc"
+              data-color="blue"
+            >
+              END
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn amber-btn"
+              data-cmd="BLACK"
+              data-title="Black Screen"
+              data-desc="Blanks the screen to refocus the audience"
+              data-key="B"
+              data-color="amber"
+            >
+              BLACK
+            </button>
+            <button
+              class="r-btn amber-btn"
+              data-cmd="WHITE"
+              data-title="White Screen"
+              data-desc="Blanks to a white screen"
+              data-key="W"
+              data-color="amber"
+            >
+              WHITE
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn"
+              data-cmd="UP"
+              data-title="Scroll Up"
+              data-desc="Scrolls up in the active window"
+              data-key="↑ Up Arrow"
+              data-color="blue"
+            >
+              ▲ UP
+            </button>
+            <button
+              class="r-btn"
+              data-cmd="DOWN"
+              data-title="Scroll Down"
+              data-desc="Scrolls down in the active window"
+              data-key="↓ Down Arrow"
+              data-color="blue"
+            >
+              ▼ DOWN
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn"
+              data-cmd="PAUSE"
+              data-title="Pause / Resume"
+              data-desc="Pauses or resumes video playback"
+              data-key="Space"
+              data-color="blue"
+            >
+              PAUSE
+            </button>
+            <button
+              class="r-btn"
+              data-cmd="TASK"
+              data-title="Task Manager"
+              data-desc="Opens Windows Task Manager"
+              data-key="Ctrl+Shift+Esc"
+              data-color="blue"
+            >
+              TASK
+            </button>
+          </div>
+
+          <div class="remote-row">
+            <button
+              class="r-btn wide"
+              data-cmd="EXIT"
+              data-title="Force Close App"
+              data-desc="Alt+F4: closes the active window"
+              data-key="Alt+F4"
+              data-color="blue"
+            >
+              EXIT APP
+            </button>
+          </div>
+
+          <div class="signal-rings" id="signal-rings">
+            <div class="ring ring-1" style="width: 0; height: 0"></div>
+            <div class="ring ring-2" style="width: 0; height: 0"></div>
+            <div class="ring ring-3" style="width: 0; height: 0"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-action-panel">
+        <div class="demo-label">Serial output → Python → Keyboard</div>
+        <div class="action-display" id="action-display">
+          <div class="action-cmd" id="action-cmd">// waiting for input</div>
+          <div class="action-title" id="action-title">Press a button</div>
+          <div class="action-desc" id="action-desc">
+            The Arduino decodes the IR signal and sends a command over serial.
+            The Python app reads it and simulates a keypress.
+          </div>
+          <div class="action-key" id="action-key" style="display: none"></div>
+        </div>
+        <div class="demo-hint">
+          <span class="hint-arrow">↗</span>
+          Each button maps to a real IR code
+        </div>
+        <div
+          style="
+            margin-top: 1.5rem;
+            background: var(--navy-mid);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+          "
+        >
+          <div
+            style="
+              font-family: var(--mono);
+              font-size: 0.72rem;
+              color: var(--muted);
+              margin-bottom: 0.5rem;
+            "
+          >
+            ARDUINO SERIAL LOG
+          </div>
+          <div
+            id="serial-log"
+            style="
+              font-family: var(--mono);
+              font-size: 0.8rem;
+              color: #5a7a5a;
+              min-height: 60px;
+            "
+          >
+            <span style="color: var(--muted)">IR Receiver ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-label">Setup</div>
+        <h2>Three steps to <em>your</em> clicker</h2>
+        <p class="section-sub">
+          No soldering required. Just wire, upload, and run.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01 — HARDWARE</div>
+            <h3>Wire the Arduino</h3>
+            <p>
+              Connect a VS1838B IR receiver to your Arduino. Use components
+              listed below.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">02 — FIRMWARE</div>
+            <h3>Upload the sketch</h3>
+            <p>
+              Open the <code>.ino</code> file in Arduino IDE. Install
+              <code>IRremote</code> library. Upload to your board.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-num">03 — SOFTWARE</div>
+            <h3>Run the Python app</h3>
+            <p>
+              Install <code>pyserial</code> and <code>pyautogui</code>, then run
+              <code>presenter_remote.py</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="video">
+      <div class="container">
+        <div class="section-label">Setup Video</div>
+        <h2>Watch it in <em>two minutes</em></h2>
+        <p class="section-sub" style="margin-bottom: 2rem">
+          Full walkthrough — wiring, uploading the sketch, and running the
+          Python app.
+        </p>
+        <div
+          style="
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+          "
+        >
+          <iframe
+            src="https://www.youtube.com/embed/j58P6SX9kRQ"
+            title="SlideBeam — Setup Tutorial"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            allowfullscreen
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border: none;
+            "
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="commands">
+      <div class="container">
+        <div class="section-label">Command Reference</div>
+        <h2>Every button, <em>explained</em></h2>
+        <p class="section-sub">
+          12 commands — all customisable in the Arduino sketch.
+        </p>
+        <div class="cmd-grid">
+          <div class="cmd-cell">
+            <span class="cmd-key">NEXT</span
+            ><span class="cmd-desc">→ Next slide</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">PREVIOUS</span
+            ><span class="cmd-desc">← Previous slide</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">START</span
+            ><span class="cmd-desc">Open PowerPoint</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">END</span
+            ><span class="cmd-desc">Esc: exit slideshow</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">APP</span
+            ><span class="cmd-desc">F5: start slideshow</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">PAUSE</span
+            ><span class="cmd-desc">Space: pause video</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">BLACK</span
+            ><span class="cmd-desc">B: black screen</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">WHITE</span
+            ><span class="cmd-desc">W: white screen</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">UP</span
+            ><span class="cmd-desc">↑ Scroll up</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">DOWN</span
+            ><span class="cmd-desc">↓ Scroll down</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">EXIT</span
+            ><span class="cmd-desc">Alt+F4: close app</span>
+          </div>
+          <div class="cmd-cell">
+            <span class="cmd-key">TASK</span
+            ><span class="cmd-desc">Ctrl+Shift+Esc</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="hardware">
+      <div class="container">
+        <div class="section-label">Hardware</div>
+        <h2>Parts you <em>need</em></h2>
+        <p class="section-sub">
+          Under $5 in components. Get what you need below.
+        </p>
+        <div class="spec-grid">
+          <div class="spec-card">
+            <div class="spec-icon">🔌</div>
+            <div class="spec-label">ARDUINO</div>
+            <div class="spec-val">
+              <a
+                href="https://nilambaraelectronics.com/product/arduino-uno-r3-smd/"
+                target="_blank"
+                >Uno R3</a
+              >
+              /
+              <a
+                href="https://nilambaraelectronics.com/product/arduino-nano-v3/?srsltid=AfmBOoplHTf10vzW-uYuJggdQX8uQygklS4v6jW5rgD-t5KV5naSAh_A"
+                target="_blank"
+                >Nano V3</a
+              >
+            </div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-icon">📡</div>
+            <div class="spec-label">IR KIT</div>
+            <div class="spec-val">
+              <a
+                href="https://tronic.lk/product/infrared-ir-remote-kit-black?srsltid=AfmBOopdmSrrJ0NuuyTDD8TACwKhMEVlRCeM7sfSboumhekQ7aBoqDI7"
+                target="_blank"
+                >Receiver & Remote</a
+              >
+            </div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-icon">💡</div>
+            <div class="spec-label">LEDS</div>
+            <div class="spec-val">
+              <a
+                href="https://lk-tronics.com/product/led-blue-5mm/"
+                target="_blank"
+                >Blue</a
+              >
+              /
+              <a
+                href="https://lk-tronics.com/product/led-green-5mm/"
+                target="_blank"
+                >Green</a
+              >
+            </div>
+          </div>
+          <div class="spec-card">
+            <div class="spec-icon">➰</div>
+            <div class="spec-label">WIRES</div>
+            <div class="spec-val">
+              <a
+                href="https://tronic.lk/product/jumper-wire-male-to-female-1x40-pin?srsltid=AfmBOookdx9UEMlkhG4z5mJecFeTzpPO00RAnGzA_bWDZ5hvLQKyfvUu"
+                target="_blank"
+                >Jumpers</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="oss-band" id="open-source">
+      <div class="oss-badge">⬡ 100% Open Source</div>
+      <div class="oss-title">Fork it. Hack it. Ship it.</div>
+      <p class="oss-sub">
+        The full source is on GitHub. Remap any button to any keypress in under
+        5 minutes.
+      </p>
+      <div class="oss-links">
+        <a
+          href="https://github.com/riviyax/Presentor-Remote"
+          class="btn-primary"
+          >★ Star on GitHub</a
+        >
+      </div>
+    </div>
+
+    <div class="cta-footer">
+      <div class="cta-glow"></div>
+      <h2>Start presenting <em>wirelessly</em></h2>
+      <p>Free download. No account. Works on Windows 10 and 11.</p>
+      <a
+        href="https://github.com/riviyax/Presentor-Remote"
+        class="btn-primary"
+        style="font-size: 1.1rem; padding: 1rem 2.5rem"
+        >↓ Download SlideBeam</a
+      >
+    </div>
+
+    <footer>
+      <span>SlideBeam — by Riviya_X</span>
+      <span>Open source · MIT License</span>
+      <a href="https://github.com/riviyax/Presentor-Remote">GitHub ↗</a>
+    </footer>
+
+    <script>
+      const buttons = document.querySelectorAll(".r-btn");
+      const irEye = document.getElementById("ir-eye");
+      const signalRings = document.getElementById("signal-rings");
+      const actionDisplay = document.getElementById("action-display");
+      const actionCmd = document.getElementById("action-cmd");
+      const actionTitle = document.getElementById("action-title");
+      const actionDesc = document.getElementById("action-desc");
+      const actionKey = document.getElementById("action-key");
+      const serialLog = document.getElementById("serial-log");
+
+      let logLines = [
+        '<span style="color:var(--muted)">IR Receiver ready</span>',
+      ];
+
+      function fireSignal(btn) {
+        const cmd = btn.dataset.cmd;
+        const title = btn.dataset.title;
+        const desc = btn.dataset.desc;
+        const key = btn.dataset.key;
+        const color = btn.dataset.color;
+
+        btn.classList.add("active");
+        setTimeout(() => btn.classList.remove("active"), 250);
+
+        irEye.classList.add("firing");
+        setTimeout(() => irEye.classList.remove("firing"), 300);
+
+        signalRings.classList.remove("burst");
+        void signalRings.offsetWidth;
+        signalRings.classList.add("burst");
+
+        const isAmber = color === "amber";
+        actionDisplay.classList.toggle("amber-mode", isAmber);
+        actionCmd.className = "action-cmd" + (isAmber ? " amber" : "");
+        actionCmd.textContent = `Serial.println("${cmd}");`;
+        actionTitle.textContent = title;
+        actionDesc.textContent = desc;
+        actionKey.textContent = key;
+        actionKey.style.display = "inline-flex";
+
+        const irCodes = {
+          NEXT: "0x5A",
+          PREVIOUS: "0x08",
+          START: "0x45",
+          END: "0x46",
+          BLACK: "0x47",
+          WHITE: "0x44",
+          UP: "0x18",
+          DOWN: "0x52",
+          APP: "0x1C",
+          PAUSE: "0x19",
+          EXIT: "0x16",
+          TASK: "0x0D",
+        };
+        const code = irCodes[cmd] || "0x??";
+
+        const logEntry = `<span style="color:var(--muted)">[IR] code=${code} → </span><span style="color:#4aff8a">${cmd}</span>`;
+        logLines.push(logEntry);
+        if (logLines.length > 5) logLines.shift();
+        serialLog.innerHTML = logLines.join("<br>");
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => fireSignal(btn));
+      });
+    </script>
+  </body>
+</html>
