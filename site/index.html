@@ -44,10 +44,10 @@
       </p>
       <div class="hero-actions">
         <a
-          href="https://github.com/riviyax/Presentor-Remote"
+          href="#cta-footer"
           class="btn-primary"
         >
-          ★ Star on GitHub
+          Download now
         </a>
         <a href="#how-it-works" class="btn-secondary"> See how it works </a>
       </div>
@@ -288,11 +288,18 @@
           </div>
           <div class="step">
             <div class="step-num">03 — SOFTWARE</div>
-            <h3>Run the Python app</h3>
+            <h3>Download the app and run it</h3>
             <p>
-              Install <code>pyserial</code> and <code>pyautogui</code>, then run
-              <code>presenter_remote.py</code>.
+              Install <code>SlideBeam</code> and Plug your <code>circuit</code>, then click
+              <code>start button</code>.
             </p>
+            <a
+              href="https://github.com/riviyax/Presentor-Remote/releases/latest"
+              target="_blank"
+              class="step-download-link"
+            >
+              ↓ Download the app
+            </a>
           </div>
         </div>
       </div>
@@ -303,7 +310,7 @@
     <section id="video">
       <div class="container">
         <div class="section-label">Setup Video</div>
-        <h2>Watch it in <em>two minutes</em></h2>
+        <h2>Watch it in <em>five minutes</em></h2>
         <p class="section-sub" style="margin-bottom: 2rem">
           Full walkthrough — wiring, uploading the sketch, and running the
           Python app.
@@ -319,7 +326,7 @@
           "
         >
           <iframe
-            src="https://www.youtube.com/embed/j58P6SX9kRQ"
+            src="https://www.youtube.com/embed/j58P6SX9kRQ?si=WdHIwHRUFpT8qlli"
             title="SlideBeam — Setup Tutorial"
             allow="
               accelerometer;
@@ -426,7 +433,7 @@
                 target="_blank"
                 >Uno R3</a
               >
-              /
+              <span style="font-size: 12px; color: #666;">or</span>
               <a
                 href="https://nilambaraelectronics.com/product/arduino-nano-v3/?srsltid=AfmBOoplHTf10vzW-uYuJggdQX8uQygklS4v6jW5rgD-t5KV5naSAh_A"
                 target="_blank"
@@ -454,7 +461,7 @@
                 target="_blank"
                 >Blue</a
               >
-              /
+              <span style="font-size: 12px; color: #666;">and</span>
               <a
                 href="https://lk-tronics.com/product/led-green-5mm/"
                 target="_blank"
@@ -493,16 +500,65 @@
       </div>
     </div>
 
-    <div class="cta-footer">
+    <div class="cta-footer" id="cta-footer">
       <div class="cta-glow"></div>
       <h2>Start presenting <em>wirelessly</em></h2>
       <p>Free download. No account. Works on Windows 10 and 11.</p>
-      <a
-        href="https://github.com/riviyax/Presentor-Remote"
+      <button
+        type="button"
         class="btn-primary"
         style="font-size: 1.1rem; padding: 1rem 2.5rem"
-        >↓ Download SlideBeam</a
+        onclick="openDownloadModal()"
       >
+        ↓ Download SlideBeam
+      </button>
+    </div>
+
+    <div class="modal-overlay" id="download-modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" type="button" aria-label="Close" onclick="closeDownloadModal()">×</button>
+        <div class="modal-eyebrow">Get SlideBeam</div>
+        <h3 class="modal-title" id="modal-title">Choose a download</h3>
+        <p class="modal-sub">
+          You'll need both pieces: the firmware that runs on your Arduino, and
+          the desktop app that listens for it.
+        </p>
+        <div class="modal-options">
+          <a
+            href="SlideBeam_IR_Receiver.ino"
+            download
+            class="modal-option"
+          >
+            <div class="modal-option-icon">📟</div>
+            <div class="modal-option-text">
+              <div class="modal-option-title">Arduino Firmware (.ino)</div>
+              <div class="modal-option-desc">
+                The sketch that decodes IR signals and sends commands over
+                serial.
+              </div>
+              <div class="modal-option-caption">
+                ⚠ Requires installing the <strong>IRremote</strong> library first
+              </div>
+            </div>
+            <div class="modal-option-arrow">↓</div>
+          </a>
+          <a
+            href="https://github.com/riviyax/Presentor-Remote/releases/latest"
+            target="_blank"
+            class="modal-option"
+          >
+            <div class="modal-option-icon">💻</div>
+            <div class="modal-option-text">
+              <div class="modal-option-title">SlideBeam App (Windows)</div>
+              <div class="modal-option-desc">
+                The desktop app that reads serial commands and simulates
+                keypresses. No install needed — just run the .exe.
+              </div>
+            </div>
+            <div class="modal-option-arrow">↓</div>
+          </a>
+        </div>
+      </div>
     </div>
 
     <footer>
@@ -576,6 +632,31 @@
 
       buttons.forEach((btn) => {
         btn.addEventListener("click", () => fireSignal(btn));
+      });
+
+      /* ── DOWNLOAD MODAL ── */
+      const downloadModal = document.getElementById("download-modal");
+
+      function openDownloadModal() {
+        downloadModal.classList.add("open");
+        downloadModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDownloadModal() {
+        downloadModal.classList.remove("open");
+        downloadModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      downloadModal.addEventListener("click", (e) => {
+        if (e.target === downloadModal) closeDownloadModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && downloadModal.classList.contains("open")) {
+          closeDownloadModal();
+        }
       });
     </script>
   </body>
